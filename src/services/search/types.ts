@@ -20,22 +20,6 @@ export interface Hit {
   url: string;
   author: string;
   points: number;
-  story_text: null;
-  comment_text: null;
-  _tags: string[];
   num_comments: number;
   objectID: string;
-  _highlightResult: HighlightResult;
-}
-
-export interface HighlightResult {
-  title: Author;
-  url: Author;
-  author: Author;
-}
-
-export interface Author {
-  value: string;
-  matchLevel: string;
-  matchedWords: string[];
 }

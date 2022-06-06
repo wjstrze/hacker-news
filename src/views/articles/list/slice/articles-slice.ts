@@ -4,12 +4,14 @@ import { SearchService, Hit } from "../../../../services";
 
 interface ArticleState {
   list: Hit[];
+  page: number;
   status: "idle" | "loading";
 }
 
 const initialState: ArticleState = {
   list: [],
   status: "idle",
+  page: 0,
 };
 
 export const fetchArticles = createAsyncThunk(
@@ -25,7 +27,11 @@ export const fetchArticles = createAsyncThunk(
 export const articlesSlice = createSlice({
   name: "articles",
   initialState,
-  reducers: {},
+  reducers: {
+    incrementPage: (state) => {
+      state.page += 1;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchArticles.pending, (state) => {
