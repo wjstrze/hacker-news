@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
-import { Item, ItemsService } from "../../../../services";
+import { Item, ItemService } from "../../../../services";
 
 export interface ArticleDetailsReturnType {
   article: Item | undefined;
@@ -9,7 +9,7 @@ export interface ArticleDetailsReturnType {
 export const useArticleDetails = (
   articleId: Item["id"]
 ): ArticleDetailsReturnType => {
-  const itemsService = useMemo(() => new ItemsService(), []);
+  const itemsService = useMemo(() => new ItemService(), []);
   const [article, setArticle] = useState<Item | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
