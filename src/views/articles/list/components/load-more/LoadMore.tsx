@@ -1,21 +1,17 @@
-import { useEffect } from "react";
-import { ChatIcon, StarIcon } from "@chakra-ui/icons";
 import { Button } from "@chakra-ui/react";
-import { selectArticles, fetchArticles } from "../../slice/articles-slice";
-import {
-  useArticlesSelector,
-  useArticlesDispatch,
-} from "../../hooks/articles-hooks";
-
-import styles from "./ArticlesList.module.scss";
+import { incrementPage } from "../../slice/articles-slice";
+import { useArticlesDispatch } from "../../hooks/articles-hooks";
 
 export const LoadMore = () => {
-  //   const articles = useArticlesSelector(selectArticles);
-  //   const dispatch = useArticlesDispatch();
+  const dispatch = useArticlesDispatch();
 
-  //   useEffect(() => {
-  //     dispatch(fetchArticles());
-  //   }, [dispatch]);
+  const handleClick = () => {
+    dispatch(incrementPage());
+  };
 
-  return <Button type="button">load more</Button>;
+  return (
+    <Button type="button" onClick={handleClick}>
+      Load more
+    </Button>
+  );
 };

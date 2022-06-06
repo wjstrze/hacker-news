@@ -1,21 +1,29 @@
-import { useEffect } from "react";
-import { ChatIcon, StarIcon } from "@chakra-ui/icons";
-import { Button, Input } from "@chakra-ui/react";
-import { selectArticles, fetchArticles } from "../../slice/articles-slice";
-import {
-  useArticlesSelector,
-  useArticlesDispatch,
-} from "../../hooks/articles-hooks";
-
-import styles from "./ArticlesList.module.scss";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { Input } from "@chakra-ui/react";
+import { updateSearch } from "../../slice/articles-slice";
+import { useArticlesDispatch } from "../../hooks/articles-hooks";
 
 export const SearchInput = () => {
-  //   const articles = useArticlesSelector(selectArticles);
-  //   const dispatch = useArticlesDispatch();
+  const [search, setSearch] = useState<string>("");
+  const dispatch = useArticlesDispatch();
 
-  //   useEffect(() => {
-  //     dispatch(fetchArticles());
-  //   }, [dispatch]);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+  };
 
-  return <Input placeholder="search articles..." />;
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    dispatch(updateSearch(search));
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <Input
+        onChange={handleChange}
+        value={search}
+        placeholder="search articles..."
+      />
+      <button type="submit" hidden />
+    </form>
+  );
 };
