@@ -1,11 +1,9 @@
 export interface Item {
   id: number;
-  created_at: Date;
+  created_at: string;
   author: string;
   title?: string;
   url?: string;
   text: null | string;
   points: number;
-  parent_id: number | null;
-  children: Item[];
 }
