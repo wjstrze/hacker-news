@@ -44,6 +44,7 @@ export const articlesSlice = createSlice({
     updateSearch: (state, action: PayloadAction<string>) => {
       state.search = action.payload;
       state.page = 0;
+      state.list = [];
     },
   },
   extraReducers: (builder) => {
