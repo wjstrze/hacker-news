@@ -7,6 +7,7 @@ import {
   selectPage,
   selectPerPage,
   selectSearch,
+  selectMetadata,
 } from "../../slice/articles-slice";
 import {
   useArticlesSelector,
@@ -20,9 +21,13 @@ export const ArticlesList = () => {
   const page = useArticlesSelector(selectPage);
   const perPage = useArticlesSelector(selectPerPage);
   const search = useArticlesSelector(selectSearch);
+  const metadata = useArticlesSelector(selectMetadata);
   const dispatch = useArticlesDispatch();
 
   useEffect(() => {
+    if (metadata?.page === page) {
+      return;
+    }
     dispatch(
       fetchArticles({
         page,
@@ -30,7 +35,7 @@ export const ArticlesList = () => {
         perPage,
       })
     );
-  }, [dispatch, page, perPage, search]);
+  }, [dispatch, page, perPage, search, metadata]);
 
   return (
     <>
