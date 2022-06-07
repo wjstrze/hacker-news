@@ -9,14 +9,14 @@ export interface ArticleDetailsReturnType {
 export const useArticleDetails = (
   articleId: Item["id"]
 ): ArticleDetailsReturnType => {
-  const itemsService = useMemo(() => new ItemService(), []);
+  const itemService = useMemo(() => new ItemService(), []);
   const [article, setArticle] = useState<Item | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const fetchArticle = useCallback(async () => {
     setIsLoading(true);
     try {
-      const article = await itemsService.item(articleId);
+      const article = await itemService.item(articleId);
       setArticle(article);
     } catch (error) {
       //TODO: handle api error
@@ -24,7 +24,7 @@ export const useArticleDetails = (
     } finally {
       setIsLoading(false);
     }
-  }, [itemsService, articleId]);
+  }, [itemService, articleId]);
 
   useEffect(() => {
     fetchArticle();

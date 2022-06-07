@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ChatIcon, StarIcon } from "@chakra-ui/icons";
 import {
   selectArticles,
@@ -34,7 +35,7 @@ export const ArticlesList = () => {
   return (
     <>
       {articles.map((article) => (
-        <article key={article.objectID}>
+        <Link to={article.objectID} key={article.objectID}>
           <div>{article.author}</div>
           <div>{article.title}</div>
           <div>
@@ -45,7 +46,7 @@ export const ArticlesList = () => {
             <StarIcon />
             {article.points}
           </div>
-        </article>
+        </Link>
       ))}
     </>
   );
