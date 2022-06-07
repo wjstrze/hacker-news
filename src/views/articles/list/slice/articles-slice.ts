@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ArticlesState } from "../store/articles-store";
-import { SearchService, Hit } from "../../../../services";
+import { SearchService, Hit, Search } from "../../../../services";
 
 interface ArticleState {
   list: Hit[];
@@ -8,6 +8,7 @@ interface ArticleState {
   search: string;
   perPage: number;
   status: "idle" | "loading";
+  metaData?: Search;
 }
 
 const initialState: ArticleState = {
@@ -16,23 +17,31 @@ const initialState: ArticleState = {
   page: 0,
   perPage: 20,
   search: "",
+  metaData: undefined,
 };
 
 export type FetchArticles = Pick<ArticleState, "page" | "perPage" | "search">;
 
-export const fetchArticles = createAsyncThunk(
-  "articles/fetchArticles",
-  async (params: FetchArticles) => {
-    const searchService = new SearchService();
-    const data = await searchService.search({
-      page: params.page,
-      hitsPerPage: params.perPage,
-      query: params.search,
-    });
+export const fetchArticles = createAsyncThunk<
+  Search | undefined,
+  FetchArticles,
+  { state: { articles: ArticleState } }
+>("articles/fetchArticles", async (params: FetchArticles, { getState }) => {
+  const { articles } = getState();
 
-    return data.hits;
+  if (articles.metaData?.page === params.page) {
+    return undefined;
   }
-);
+
+  const searchService = new SearchService();
+  const data = await searchService.search({
+    page: params.page,
+    hitsPerPage: params.perPage,
+    query: params.search,
+  });
+
+  return data;
+});
 
 export const articlesSlice = createSlice({
   name: "articles",
@@ -54,7 +63,10 @@ export const articlesSlice = createSlice({
       })
       .addCase(fetchArticles.fulfilled, (state, action) => {
         state.status = "idle";
-        state.list = state.list.concat(action.payload);
+        if (action.payload) {
+          state.metaData = action.payload;
+          state.list = state.list.concat(action.payload.hits);
+        }
       });
   },
 });

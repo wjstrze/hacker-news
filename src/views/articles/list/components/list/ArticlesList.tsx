@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ChatIcon, StarIcon } from "@chakra-ui/icons";
 import {
   selectArticles,
