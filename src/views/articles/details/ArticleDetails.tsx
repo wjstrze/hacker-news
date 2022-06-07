@@ -5,7 +5,7 @@ import { useArticleDetails } from "./hooks/use-article-details";
 export const ArticlesDetails = () => {
   const { articleId } = useParams();
 
-  if (articleId === undefined || parseInt(articleId) === undefined) {
+  if (articleId === undefined || isNaN(parseInt(articleId))) {
     return <div>not found</div>;
   }
 

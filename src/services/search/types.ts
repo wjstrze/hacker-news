@@ -16,10 +16,11 @@ export interface Search {
 }
 
 export interface Hit {
+  objectID: string;
+  created_at: string;
   title: string;
   url: string;
   author: string;
   points: number;
   num_comments: number;
-  objectID: string;
 }

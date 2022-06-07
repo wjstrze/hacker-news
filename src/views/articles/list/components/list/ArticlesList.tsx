@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ChatIcon, StarIcon } from "@chakra-ui/icons";
+import { Heading, Text } from "@chakra-ui/react";
+
 import {
   selectArticles,
   fetchArticles,
@@ -25,7 +27,7 @@ export const ArticlesList = () => {
   const dispatch = useArticlesDispatch();
 
   useEffect(() => {
-    if (metadata?.page === page) {
+    if (metadata?.page === page && metadata.query === search) {
       return;
     }
     dispatch(
@@ -37,22 +39,36 @@ export const ArticlesList = () => {
     );
   }, [dispatch, page, perPage, search, metadata]);
 
+  const formatDate = (utcDate: string) =>
+    new Date(utcDate).toLocaleDateString();
+
   return (
-    <>
+    <div className={styles.list}>
       {articles.map((article) => (
-        <Link to={article.objectID} key={article.objectID}>
-          <div>{article.author}</div>
-          <div>{article.title}</div>
-          <div>
-            <ChatIcon />
-            {article.num_comments}
-          </div>
-          <div>
-            <StarIcon />
-            {article.points}
+        <Link
+          className={styles.list__item}
+          to={article.objectID}
+          key={article.objectID}
+        >
+          <Text>{formatDate(article.created_at)}</Text>
+          <Heading as="h3" size="lg">
+            {article.title}
+          </Heading>
+          <Heading as="h4" size="md">
+            {article.author}
+          </Heading>
+          <div className={styles.icon_group}>
+            <span>
+              <ChatIcon />
+              {article.num_comments}
+            </span>
+            <span>
+              <StarIcon />
+              {article.points}
+            </span>
           </div>
         </Link>
       ))}
-    </>
+    </div>
   );
 };
