@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ChatIcon, StarIcon } from "@chakra-ui/icons";
 import { Heading, Text } from "@chakra-ui/react";
 
+import { formatDate } from "../../../../../utils";
 import {
   selectArticles,
   fetchArticles,
@@ -38,9 +39,6 @@ export const ArticlesList = () => {
       })
     );
   }, [dispatch, page, perPage, search, metadata]);
-
-  const formatDate = (utcDate: string) =>
-    new Date(utcDate).toLocaleDateString();
 
   return (
     <div className={styles.list}>
