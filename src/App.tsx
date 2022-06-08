@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
-import { Articles } from "./views/articles/list/Articles";
-import { ArticlesDetails } from "./views/articles/details/ArticleDetails";
+import { Articles, ArticlesDetails } from "./views/articles";
 
 export const App = () => {
   return (
