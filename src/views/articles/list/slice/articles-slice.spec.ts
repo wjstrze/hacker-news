@@ -1,4 +1,4 @@
-import { SearchService } from "../../../../services";
+import { SearchService, MOCK_SEARCH } from "../../../../services";
 
 import {
   fetchArticles,
@@ -8,7 +8,6 @@ import {
   ArticleState,
   FetchArticles,
 } from "./articles-slice";
-import { MOCK_SEARCH } from "./mock-item";
 
 jest.mock("@reduxjs/toolkit/src/createAsyncThunk");
 jest.mock("../../../../services/search/search.service.ts");

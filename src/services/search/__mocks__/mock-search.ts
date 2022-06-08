@@ -1,4 +1,4 @@
-import { Search } from "../../../../services";
+import { Search } from "../types";
 
 export const MOCK_SEARCH: Search = {
   hits: [
