@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ArticlesState } from "../store/articles-store";
 import { SearchService, Hit, Search } from "../../../../services";
 
-interface ArticleState {
+export interface ArticleState {
   list: Hit[];
   page: number;
   search: string;
