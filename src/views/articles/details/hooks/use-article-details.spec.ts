@@ -28,7 +28,7 @@ jest.mock("../../../../services/item/item.service", () => ({
 }));
 
 // react testing library hooks doesn't support react v18
-describe.skip("use article hook", () => {
+describe("use article hook", () => {
   let renderedHook: RenderHookResult<Item["id"], ArticleDetailsReturnType>;
   const articleId: Item["id"] = 5;
 
