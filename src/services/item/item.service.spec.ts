@@ -1,8 +1,8 @@
-import { HackerNewsAPI } from "../hacker-news-api/hacker-news-api";
+import axios from "axios";
 import { ItemService } from "./item.service";
 import { Item } from "./types";
 
-jest.mock("../hacker-news-api/hacker-news-api.ts");
+jest.mock("axios");
 
 const MOCK_ITEM: Item = {
   id: 5,
@@ -26,30 +26,26 @@ const prepareApiAndMock = (status = 200, data: unknown = undefined) => {
     });
   });
 
-  (HackerNewsAPI as jest.Mock).mockImplementation(() => ({
-    hackerNewsAPI: {
-      get: mockGet,
-    },
+  (axios.create as jest.Mock).mockImplementation(() => ({
+    get: mockGet,
   }));
+
   return {
     itemService: new ItemService(),
     mockGet,
   };
 };
 
-describe.skip("Item Service", () => {
+describe("Item Service", () => {
   describe("get item", () => {
-    const mockResponse = {
-      data: MOCK_ITEM,
-    };
     it("calls api", async () => {
-      const { mockGet, itemService } = prepareApiAndMock(200, mockResponse);
+      const { mockGet, itemService } = prepareApiAndMock(200, MOCK_ITEM);
       await itemService.item(42);
       expect(mockGet).toHaveBeenCalledWith("items/42");
     });
 
     it("returns item data", async () => {
-      const { itemService } = prepareApiAndMock(200, mockResponse);
+      const { itemService } = prepareApiAndMock(200, MOCK_ITEM);
       const result = await itemService.item(42);
       expect(result).toStrictEqual(MOCK_ITEM);
     });
